@@ -1,8 +1,8 @@
 import pandas as pd
 
 # Define the questions data
-questions_data = [
-    {"Quiz ID": "Quiz 1", "Question ID": "M1", "Question": "What is the primary function of the prostate gland?",
+data = pd.DataFrame([
+     {"Quiz ID": "Quiz 1", "Question ID": "M1", "Question": "What is the primary function of the prostate gland?",
      "Options": "a. Store urine, b. Produce seminal fluid, c. Protect the kidneys, d. Regulate hormones",
      "Correct Answer": "b", "Topic": "Prostate Gland"},
     {"Quiz ID": "Quiz 1", "Question ID": "M2", "Question": "Which part of the male reproductive system is responsible for carrying urine and semen out?",
@@ -17,26 +17,36 @@ questions_data = [
     {"Quiz ID": "Quiz 1", "Question ID": "M5", "Question": "Which organ is responsible for producing testosterone in males?",
      "Options": "a. Prostate gland, b. Testes, c. Kidney, d. Bladder",
      "Correct Answer": "b", "Topic": "Testes"},
-    {"Quiz ID": "Quiz 1", "Question ID": "M6", "Question": "What is the primary function of the bladder?",
-     "Options": "a. To produce sperm, b. To store urine, c. To produce seminal fluid, d. To transport sperm",
-     "Correct Answer": "b", "Topic": "Bladder"},
-    {"Quiz ID": "Quiz 1", "Question ID": "M7", "Question": "What is the function of the penis in the male reproductive system?",
-     "Options": "a. To produce sperm, b. To deliver sperm into the female reproductive system, c. To regulate hormone production, d. To filter blood",
-     "Correct Answer": "b", "Topic": "Penis"},
-    {"Quiz ID": "Quiz 1", "Question ID": "M8", "Question": "What are the tiny tubes in the testes where sperm production occurs called?",
-     "Options": "a. Urethra, b. Seminiferous tubules, c. Vas deferens, d. Epididymis",
-     "Correct Answer": "b", "Topic": "Testes"},
-    {"Quiz ID": "Quiz 1", "Question ID": "M9", "Question": "Where is sperm stored before ejaculation?",
-     "Options": "a. Prostate gland, b. Vas deferens, c. Epididymis, d. Urethra",
-     "Correct Answer": "c", "Topic": "Epididymis"},
-    {"Quiz ID": "Quiz 1", "Question ID": "M10", "Question": "Which part of the male reproductive system transports sperm from the testes to the urethra?",
-     "Options": "a. Vas deferens, b. Prostate gland, c. Seminiferous tubules, d. Bladder",
-     "Correct Answer": "a", "Topic": "Vas Deferens"}
-]
+    {"Quiz ID": "Quiz 2", "Question ID": "F1", "Question": "What is the function of the uterus in the female reproductive system?",
+     "Options": "a. Produces eggs, b. Houses and nourishes a developing fetus, c. Produces hormones, d. Transports eggs",
+     "Correct Answer": "b", "Topic": "Uterus"},
+    {"Quiz ID": "Quiz 2", "Question ID": "F2", "Question": "Which part of the female reproductive system connects the ovary to the uterus?",
+     "Options": "a. Cervix, b. Fallopian tube, c. Vagina, d. Uterus",
+     "Correct Answer": "b", "Topic": "Fallopian Tube"},
+    {"Quiz ID": "Quiz 2", "Question ID": "F3", "Question": "What is the role of the cervix?",
+     "Options": "a. To produce eggs, b. To act as the opening to the uterus, c. To carry eggs, d. To release hormones",
+     "Correct Answer": "b", "Topic": "Cervix"},
+    {"Quiz ID": "Quiz 2", "Question ID": "F4", "Question": "What is the main function of the ovaries?",
+     "Options": "a. To produce and release eggs, b. To support a developing fetus, c. To store sperm, d. To connect to the uterus",
+     "Correct Answer": "a", "Topic": "Ovary"},
+    {"Quiz ID": "Quiz 2", "Question ID": "F5", "Question": "What is the vagina's primary function?",
+     "Options": "a. Acts as the birth canal, b. Stores eggs, c. Produces hormones, d. Transports sperm to the fallopian tube",
+     "Correct Answer": "a", "Topic": "Vagina"},
+    {"Quiz ID": "Quiz 3", "Question ID": "Q1", "Question": "What is the primary function of the small intestine?",
+     "Options": "a. Absorption of nutrients, b. Storage of waste, c. Production of bile, d. Filtering blood",
+     "Correct Answer": "a", "Topic": "Small Intestine"},
+    {"Quiz ID": "Quiz 3", "Question ID": "Q2", "Question": "Which organ stores bile for digestion?",
+     "Options": "a. Liver, b. Pancreas, c. Gallbladder, d. Small intestine",
+     "Correct Answer": "c", "Topic": "Gallbladder"},
+    {"Quiz ID": "Quiz 3", "Question ID": "Q3", "Question": "What is the primary role of the pancreas?",
+     "Options": "a. Produces insulin and digestive enzymes, b. Stores bile, c. Filters blood, d. Produces red blood cells",
+     "Correct Answer": "a", "Topic": "Pancreas"},
+    {"Quiz ID": "Quiz 3", "Question ID": "Q4", "Question": "What is the primary function of the large intestine?",
+     "Options": "a. Water absorption and feces formation, b. Digest protein, c. Produce insulin, d. Store nutrients",
+     "Correct Answer": "a", "Topic": "Large Intestine"},
+    {"Quiz ID": "Quiz 3", "Question ID": "Q5", "Question": "Which organ produces bile to help digest fats?",
+     "Options": "a. Liver, b. Pancreas, c. Gallbladder, d. Stomach",
+     "Correct Answer": "a", "Topic": "Liver"},
+])
 
-# Convert to a pandas DataFrame
-questions_df = pd.DataFrame(questions_data)
-
-# Save the DataFrame to a pickle file
-questions_df.to_pickle("dataset/questions_male.pkl")
-print("Questions dataset saved as 'dataset/questions.pkl'")
+data.to_csv("dataset/questions.csv", index=False)
