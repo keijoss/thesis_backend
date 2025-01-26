@@ -1,0 +1,16 @@
+Quiz ID,Question ID,Question,Options,Correct Answer,Topic
+Quiz 1,M1,What is the primary function of the prostate gland?,"a. Store urine, b. Produce seminal fluid, c. Protect the kidneys, d. Regulate hormones",b,Prostate Gland
+Quiz 1,M2,Which part of the male reproductive system is responsible for carrying urine and semen out?,"a. Bladder, b. Urethra, c. Penis, d. Prostate gland",b,Urethra
+Quiz 1,M3,What is the role of the spermatic cord?,"a. To transport sperm and blood to the testes, b. To produce testosterone, c. To store urine, d. To filter blood",a,Spermatic Cord
+Quiz 1,M4,What is the function of the testes?,"a. To produce and store sperm, b. To regulate blood flow, c. To store urine, d. To produce seminal fluid",a,Testes
+Quiz 1,M5,Which organ is responsible for producing testosterone in males?,"a. Prostate gland, b. Testes, c. Kidney, d. Bladder",b,Testes
+Quiz 2,F1,What is the function of the uterus in the female reproductive system?,"a. Produces eggs, b. Houses and nourishes a developing fetus, c. Produces hormones, d. Transports eggs",b,Uterus
+Quiz 2,F2,Which part of the female reproductive system connects the ovary to the uterus?,"a. Cervix, b. Fallopian tube, c. Vagina, d. Uterus",b,Fallopian Tube
+Quiz 2,F3,What is the role of the cervix?,"a. To produce eggs, b. To act as the opening to the uterus, c. To carry eggs, d. To release hormones",b,Cervix
+Quiz 2,F4,What is the main function of the ovaries?,"a. To produce and release eggs, b. To support a developing fetus, c. To store sperm, d. To connect to the uterus",a,Ovary
+Quiz 2,F5,What is the vagina's primary function?,"a. Acts as the birth canal, b. Stores eggs, c. Produces hormones, d. Transports sperm to the fallopian tube",a,Vagina
+Quiz 3,Q1,What is the primary function of the small intestine?,"a. Absorption of nutrients, b. Storage of waste, c. Production of bile, d. Filtering blood",a,Small Intestine
+Quiz 3,Q2,Which organ stores bile for digestion?,"a. Liver, b. Pancreas, c. Gallbladder, d. Small intestine",c,Gallbladder
+Quiz 3,Q3,What is the primary role of the pancreas?,"a. Produces insulin and digestive enzymes, b. Stores bile, c. Filters blood, d. Produces red blood cells",a,Pancreas
+Quiz 3,Q4,What is the primary function of the large intestine?,"a. Water absorption and feces formation, b. Digest protein, c. Produce insulin, d. Store nutrients",a,Large Intestine
+Quiz 3,Q5,Which organ produces bile to help digest fats?,"a. Liver, b. Pancreas, c. Gallbladder, d. Stomach",a,Liver

@@ -2,77 +2,81 @@ from flask import Flask, request, jsonify, render_template
 import pickle
 import pandas as pd
 
-# Initialize Flask app
+# Initialize Flask app  
 app = Flask(__name__)
 
-# Load your trained model
-model = pickle.load(open("dataset/male_quiz_ai.pkl", "rb"))
+# Load the trained model and dataset
+model_path = "dataset/3quiz1model.pkl"
+data_path = "dataset/questions.csv"
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+# Load model and feature names
+with open(model_path, "rb") as file:
+    model_data = pickle.load(file)
 
-@app.route('/predict/male', methods=['POST'])
+model = model_data["model"]
+model_features = model_data["features"]  # Load feature names
+
+data = pd.read_csv(data_path)
+
+@app.route('/predict/', methods=['POST'])
 def predict():
     try:
-        # Parse input JSON
-        input_data = request.get_json(force=True)
-        student_answers = input_data['answers']  # Ensure the key matches your client-side structure
+        # Get JSON input from request
+        input_data = request.json
 
-        # Validate the input
-        if not isinstance(student_answers, list) or not student_answers:
-            return jsonify({"error": "Invalid input format. 'answers' must be a non-empty list."}), 400
+        # Extract answers and question IDs
+        student_answers = input_data.get("answers", [])
+        if not student_answers:
+            return jsonify({"error": "No answers provided"}), 400
 
-        # Convert student answers into DataFrame
+        # Merge student answers with the dataset
         answers_df = pd.DataFrame(student_answers)
+        data_with_answers = data.merge(answers_df, on="Question ID", how="left")
 
-        # Load dataset with questions and answers
-        dataset = pd.read_pickle("dataset/questions_male.pkl")  # Save your question dataset to this file
-        data = dataset.merge(answers_df, on="Question ID", how="left")
+        # Calculate accuracy score
+        data_with_answers["Accuracy Score"] = data_with_answers.apply(
+            lambda row: 1 if row["Answer"] == row["Correct Answer"]
+            else (0.5 if pd.notna(row["Answer"]) else 0),
+            axis=1
+        )
 
-        # Add 'Is Correct' column
-        data["Is Correct"] = (data["Answer"] == data["Correct Answer"]).astype(int)
+        # Prepare input data for prediction
+        X = pd.get_dummies(data_with_answers[["Quiz ID", "Topic", "Answer"]])
 
-        # # Prepare data for prediction
-        # X = pd.get_dummies(data[["Quiz ID", "Topic", "Answer"]])
+        # Align input features with model's expected features
+        X = X.reindex(columns=model_features, fill_value=0)
 
-        # # Predict using the loaded model
-        # data["Predicted"] = model.predict(X)
+        # Make predictions
+        data_with_answers["Predicted"] = model.predict(X)
 
-        # Prepare data for prediction
-        X = pd.get_dummies(data[["Quiz ID", "Topic", "Answer"]])
+        # Calculate performance and topics to review
+        performance = data_with_answers.groupby("Topic")["Accuracy Score"].mean().reset_index()
+        performance.columns = ["Topic", "Average Accuracy"]
 
-        # Debugging: Check the input to the model
-        print("Input to model:", X.head())
+        threshold = 0.7  # Define the threshold for topics to review
+        to_review = performance[(performance["Average Accuracy"] < threshold) & (performance["Average Accuracy"] > 0)]
 
-        # Predict using the loaded model
-        try:
-            data["Predicted"] = model.predict(X.values)
-        except Exception as e:
-            print(f"Error during prediction: {e}")
-            return jsonify({"error": f"Prediction failed: {str(e)}"}), 500
+        # Identify wrong answers
+        wrong_answers = data_with_answers[data_with_answers["Accuracy Score"] == 0.5][
+            ["Question ID", "Question", "Topic", "Answer", "Correct Answer"]
+        ]
 
-        # Calculate performance by topic
-        performance = data.groupby("Topic")["Is Correct"].mean().reset_index()
-        performance.columns = ["Topic", "Accuracy"]
+        # Calculate model accuracy based on predictions
+        correct_predictions = (
+            data_with_answers["Predicted"] == (data_with_answers["Accuracy Score"] == 1)
+        ).mean() * 100
 
-        # Suggest topics for review
-        threshold = 0.7
-        to_review = performance[performance["Accuracy"] < threshold]
-
-        # Model accuracy
-        overall_accuracy = (data["Predicted"] == data["Is Correct"]).mean()
-
-        # Response payload
-        response = {
-            "overall_accuracy": f"{overall_accuracy * 100:.2f}%",
-            "topics_to_review": to_review.to_dict(orient="records")
+        # Prepare response
+        output = {
+            "Model Accuracy": f"{correct_predictions:.2f}%",
+            "Wrong Answers": wrong_answers.to_dict(orient="records"),
+            "Topics to Review": to_review.to_dict(orient="records"),
         }
-        return jsonify(response)
+        return jsonify(output)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
+    
 # Run the Flask app
 if __name__ == "__main__":
     app.run(debug=True)
